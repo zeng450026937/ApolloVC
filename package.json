@@ -1,0 +1,108 @@
+{
+  "name": "apollo-vc",
+  "version": "1.0.0",
+  "description": "Video Conference Client",
+  "main": "index.js",
+  "author": "ito",
+  "license": "MIT",
+  "keywords": [
+    "electron",
+    "vue",
+    "sip",
+    "webrtc"
+  ],
+  "scripts": {
+    "postinstall": "yarn compile:dll && yarn compile:website-dll",
+    "dev": "electron-webpack dev",
+    "dev:website": "webpack-dev-server --color --env.autoClean=false --config webpack.website.renderer.js",
+    "compile": "electron-webpack",
+    "compile:dll": "electron-webpack dll",
+    "compile:main": "electron-webpack main",
+    "compile:renderer": "electron-webpack renderer",
+    "compile:website-dll": "cross-env NODE_ENV=production webpack --config webpack.website.dll.js",
+    "compile:website": "cross-env NODE_ENV=production webpack --config webpack.website.renderer.js",
+    "build": "electron-builder",
+    "dist": "yarn compile && yarn build",
+    "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0-beta.46",
+    "@babel/preset-env": "^7.0.0-beta.46",
+    "@babel/preset-stage-2": "^7.0.0-beta.46",
+    "babel-eslint": "^8.2.3",
+    "copy-webpack-plugin": "^4.5.1",
+    "css-loader": "^0.28.11",
+    "ejs": "^2.5.9",
+    "ejs-html-loader": "^3.1.0",
+    "electron": "^2.0.0",
+    "electron-builder": "^20.11.1",
+    "electron-webpack": "^2.0.1",
+    "electron-webpack-vue": "^2.1.1",
+    "eslint": "^4.19.1",
+    "eslint-plugin-html": "^4.0.3",
+    "favicons-webpack-plugin": "^0.0.9",
+    "html-webpack-include-assets-plugin": "^1.0.4",
+    "less": "^3.0.2",
+    "less-loader": "^4.1.0",
+    "node-sass": "^4.9.0",
+    "sass-loader": "^7.0.1",
+    "webpack": "^4.6.0",
+    "webpack-cli": "^2.1.2"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "electron-log": "^2.2.14",
+    "electron-updater": "^2.21.10",
+    "vue": "^2.5.16",
+    "vuetify": "^1.0.17"
+  },
+  "resolutions": {
+    "webpack-sources": "1.1.0"
+  },
+  "electronWebpack": {
+    "title": "Yealink VC",
+    "whiteListedModules": [],
+    "commonSourceDirectory": "src/common",
+    "main": {
+      "extraEntries": [
+        "@/preload.js"
+      ],
+      "sourceDirectory": "src/main",
+      "webpackConfig": "webpack.main.additions.js"
+    },
+    "renderer": {
+      "dll": [],
+      "sourceDirectory": "src/renderer",
+      "webpackConfig": "webpack.renderer.additions.js",
+      "webpackDllConfig": "webpack.dll.additions.js"
+    }
+  },
+  "build": {
+    "appId": "com.yealink.www.cloud",
+    "publish": [
+      {
+        "provider": "generic",
+        "url": "http://cn.download.yealinkvc.com/RTVC/"
+      }
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "verifyUpdateCodeSignature": false
+    },
+    "mac": {
+      "target": [
+        "zip",
+        "dmg"
+      ],
+      "category": "public.app-category.video"
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Video"
+    }
+  }
+}

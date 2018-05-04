@@ -1,0 +1,3 @@
+[submodule "ApolloSIP"]
+	path = ApolloSIP
+	url = git@gitlab.leucs.com:server-app/ApolloSIP.git
