@@ -775,9 +775,9 @@ FSS.Renderer.prototype = {
  * @class Canvas Renderer
  * @author Matthew Wagerfield
  */
-FSS.CanvasRenderer = function() {
+FSS.CanvasRenderer = function(element) {
   FSS.Renderer.call(this);
-  this.element = document.createElement('canvas');
+  this.element = element || document.createElement('canvas');
   this.element.style.display = 'block';
   this.context = this.element.getContext('2d');
   this.setSize(this.element.width, this.element.height);
@@ -842,9 +842,9 @@ FSS.CanvasRenderer.prototype.render = function(scene) {
  * @class WebGL Renderer
  * @author Matthew Wagerfield
  */
-FSS.WebGLRenderer = function() {
+FSS.WebGLRenderer = function(element) {
   FSS.Renderer.call(this);
-  this.element = document.createElement('canvas');
+  this.element = element || document.createElement('canvas');
   this.element.style.display = 'block';
 
   // Set initial vertex and light count
@@ -1291,9 +1291,9 @@ FSS.WebGLRenderer.FS = function(lights) {
  * @class SVG Renderer
  * @author Matthew Wagerfield
  */
-FSS.SVGRenderer = function() {
+FSS.SVGRenderer = function(element) {
   FSS.Renderer.call(this);
-  this.element = document.createElementNS(FSS.SVGNS, 'svg');
+  this.element = element || document.createElementNS(FSS.SVGNS, 'svg');
   this.element.setAttribute('xmlns', FSS.SVGNS);
   this.element.setAttribute('version', '1.1');
   this.element.style.display = 'block';

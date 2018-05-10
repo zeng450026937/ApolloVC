@@ -1,27 +1,24 @@
 <template>
-  <div id="container">
-    <div id="output"
+  <v-container 
+    fluid fill-height px-0 py-0
+    tag="canvas" ref="container"
     style="overflow: hidden"
-    class="layer"
     v-on:click="onMouseClick"
-    v-on:mousemove="onMouseMove">
-    </div>
+    v-on:mousemove="onMouseMove"
+  >
     <slot></slot>
-  </div>
+  </v-container>
 </template>
 
 <script>
-import FSS from '../assets/fss';
-import Debug from 'common/Debug';
-
-const debug = Debug('Vue:FSS');
+import FSS from './render';
 
 const MESH = {
-  width    : 1.2,
-  height   : 1.2,
+  width    : 1.5,
+  height   : 1.5,
   depth    : 5,
-  segments : 16,
-  slices   : 8,
+  segments : 8,
+  slices   : 4,
   xRange   : 0.8,
   yRange   : 0.1,
   zRange   : 1.0,
@@ -32,9 +29,9 @@ const MESH = {
 const LIGHT = {
   count       : 2,
   xyScalar    : 1,
-  zOffset     : 100,
-  ambient     : '#880066',
-  diffuse     : '#FF8800',
+  zOffset     : 50,
+  ambient     : '#0D47A1',
+  diffuse     : '#2196F3',
   speed       : 0.001,
   gravity     : 1200,
   dampening   : 0.95,
@@ -69,7 +66,6 @@ export default {
       center         : undefined,
       attractor      : undefined,
       container      : undefined,
-      output         : undefined,
       webglRenderer  : undefined,
       canvasRenderer : undefined,
       svgRenderer    : undefined,
@@ -86,56 +82,36 @@ export default {
       return Date.now() - this.now;
     }
   },
-  // lifecycle
-  beforeCreate() {
-    debug('beforeCreate');
-  },
-  created() {
-    debug('created');
-  },
-  beforeMount() {
-    debug('beforeMount');
-  },
   mounted() {
-    debug('mounted');
-
     this.center = FSS.Vector3.create();
     this.attractor = FSS.Vector3.create();
-    this.container = document.getElementById('container');
-    this.output = document.getElementById('output');
+    this.container = this.$refs['container'];
 
     this.createRenderer();
     this.createScene();
     this.createMesh();
     this.createLights();
-    this.resize(this.output.offsetWidth, this.output.offsetHeight);
+    this.resize(this.container.offsetWidth, this.container.offsetHeight);
     this.animate();
 
-    window.addEventListener('resize', this.onWindowResize);
-  },
-  beforeUpdate() {
-    debug('beforeUpdate');
-  },
-  updated() {
-    debug('updated');
-  },
-  beforeDestroy() {
-    debug('beforeDestroy');
+    window.addEventListener('resize', this.onWindowResize.bind(this));
   },
   destroyed() {
-    debug('destroyed');
+    window.removeEventListener('resize', this.onWindowResize.bind(this));
   },
   methods : {
     createRenderer() {
-      this.webglRenderer = new FSS.WebGLRenderer();
-      this.canvasRenderer = new FSS.CanvasRenderer();
-      this.svgRenderer = new FSS.SVGRenderer();
+      this.webglRenderer = new FSS.WebGLRenderer(this.container);
+      // this.canvasRenderer = new FSS.CanvasRenderer();
+      // this.svgRenderer = new FSS.SVGRenderer();
       this.setRenderer(RENDERER.renderer);
     },
     setRenderer(type) {
+      /*
       if (this.renderer) {
         this.output.removeChild(this.renderer.element);
       }
+      */
       switch (type) {
         case RENDERER.WEBGL:
           this.renderer = this.webglRenderer;
@@ -147,8 +123,11 @@ export default {
           this.renderer = this.svgRenderer;
           break;
       }
+
+      /*
       this.renderer.setSize(this.output.offsetWidth, this.output.offsetHeight);
       this.output.appendChild(this.renderer.element);
+      */
     },
     createScene() {
       this.scene = new FSS.Scene();
@@ -340,19 +319,14 @@ export default {
       FSS.Vector3.subtract(this.attractor, this.center);
     },
     onWindowResize() {
-      this.resize(this.output.offsetWidth, this.output.offsetHeight);
+      this.resize(this.container.offsetWidth, this.container.offsetHeight);
       this.render();
     }
   }
 };
 </script>
 
-<style>
-.layer {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  z-index: -1;
-}
+<style scoped>
+
 </style>
 

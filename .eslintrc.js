@@ -22,8 +22,10 @@ module.exports =
 	parser: 'babel-eslint',
 	parserOptions:
 	{
-		ecmaVersion: 6,
 		sourceType: 'module',
+		allowImportExportEverywhere: false,
+    codeFrame: false,
+		ecmaVersion: 6,
 		ecmaFeatures:
 		{
 			impliedStrict: true
