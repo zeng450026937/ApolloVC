@@ -1,6 +1,6 @@
 <template>
   <v-layout align-center justify-center>
-    <v-flex xs10 sm6 md4 lg3>
+    <v-flex xs11 sm6 md4 lg3>
       <v-card class="elevation-24">
         <v-card-media>
           <FSS></FSS>
@@ -12,11 +12,13 @@
           </v-container>
         </v-card-media>
         <v-card-text>
-          <v-layout justify-center>
-            <v-form>
-              <v-text-field clearable prepend-icon="person" name="login" label="Account" type="text"></v-text-field>
-              <v-text-field clearable prepend-icon="lock" name="password" label="Password" type="password"></v-text-field>
-            </v-form>
+          <v-layout align-center justify-center>
+            <v-flex xs11 sm10 md9 lg8>
+              <v-form>
+                <v-text-field autofocus clearable prepend-icon="person" name="login" label="Account" type="text"></v-text-field>
+                <v-text-field clearable prepend-icon="lock" name="password" label="Password" type="password"></v-text-field>
+              </v-form>
+            </v-flex>
           </v-layout>
         </v-card-text>
         <v-card-actions>
@@ -52,7 +54,7 @@ export default {
     submit() {
       this.loading = !this.loading;
       setTimeout(() => (this.loading = false), 3000);
-      this.$router.push({ path: '/meeting' });
+      // this.$router.push({ path: '/meeting' });
     }
   }
 };

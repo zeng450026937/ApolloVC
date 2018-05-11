@@ -1,5 +1,5 @@
 <template>
-  <v-layout column>
+  <v-layout>
 
     <v-btn dark color="pink" fab fixed bottom right>
       <v-icon>dialpad</v-icon>
@@ -17,6 +17,9 @@ export default {
     destination : 'meeting'
   }),
   props : {
+    
+  },
+  methods : {
     
   }
 };
