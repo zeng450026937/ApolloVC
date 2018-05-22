@@ -3,8 +3,8 @@ import VueRouter from 'vue-router';
 
 Vue.use(VueRouter);
 
-import Login from '../view/Login';
-import Navigation from '../view/Navigation';
+import Login from '../view/Login/Login';
+import Home from '../view/Home/Home';
 import Test from '../view/Test';
 
 const router = new VueRouter({
@@ -15,9 +15,9 @@ const router = new VueRouter({
       component : Login
     },
     {
-      path      : '/meeting',
-      name      : Navigation.name,
-      component : Navigation
+      path      : '/home',
+      name      : Home.name,
+      component : Home
     },
     {
       path      : '/test',

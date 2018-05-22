@@ -29,17 +29,21 @@ function createMainWindow() {
   const { width, height } = screen.getPrimaryDisplay().workAreaSize;
 
   const window = new BrowserWindow({
-    width          : width,
-    height         : height,
-    show           : false,
-    frame          : true,
-    webPreferences : {
+    width           : 360,
+    minWidth        : 360,
+    height          : 640,
+    minHeight       : 640,
+    show            : true,
+    frame           : false,
+    resizable       : false,
+    backgroundColor : '#03A9F4',
+    webPreferences  : {
       nativeWindowOpen : true
     }
   });
   
   if (isDevelopment) {
-    window.webContents.openDevTools();
+    // window.webContents.openDevTools();
   }
   
   if (isDevelopment) {
